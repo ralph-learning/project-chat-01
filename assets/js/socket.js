@@ -22,7 +22,7 @@ chatInput.addEventListener("keypress", event => {
 });
 
 channel.on("new_msg", (payload) => {
-  // console.log(payload)
+  console.log(payload)
   const messageItem = document.createElement("p");
   const current_datetime = new Date();
 
@@ -31,7 +31,7 @@ channel.on("new_msg", (payload) => {
   const template = `
     <p class="chat-message--head">
       <span class="chat-message--date">[10/03/2019]</span>
-      <span class="chat-message--name">______</span>
+      <span class="chat-message--name">${payload.name}</span>
     </p>
     <p class="chat-message--body">
       ${payload.body}

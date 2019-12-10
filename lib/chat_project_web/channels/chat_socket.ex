@@ -14,7 +14,7 @@ defmodule ChatProjectWeb.RoomChannel do
 
     case Chat.create_message(user, %{ message: body }) do
       {:ok, message} ->
-        broadcast! socket, "new_msg", %{body: message.message}
+        broadcast! socket, "new_msg", %{body: message.message, name: user.name}
         {:reply, :ok, socket}
 
       {:error, changeset} ->
