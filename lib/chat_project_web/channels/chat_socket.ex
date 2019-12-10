@@ -2,6 +2,7 @@ defmodule ChatProjectWeb.RoomChannel do
   use Phoenix.Channel
 
   alias ChatProject.Chat
+  alias ChatProject.Chat.Message
   alias ChatProject.Repo
   alias ChatProject.Accounts.User
 
@@ -11,14 +12,14 @@ defmodule ChatProjectWeb.RoomChannel do
 
   def handle_in("new_msg", %{"user_id" => user_id, "body" => body}, socket) do
     user = Repo.get(User, user_id)
-    changeset = Chat.create_message(user, %{ message: body })
-    broadcast!(socket, "new_msg", %{body: body})
 
-    Repo.insert(changeset)
-      # {:ok, message} ->
-      #   broadcast!(socket, "new_msg", %{body: message})
+    case Chat.create_message(user, %{ message: body }) do
+      {:ok, message} ->
+        broadcast! socket, "new_msg", %{body: message.message}
+        {:reply, :ok, socket}
 
-      # {:error, changeset} ->
-      #   {:reply, {:error, %{reasons: changeset}}, socket}
+      {:error, changeset} ->
+        {:reply, {:error, %{reasons: changeset}}, socket}
+    end
   end
 end
