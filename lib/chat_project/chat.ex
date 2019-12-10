@@ -7,6 +7,7 @@ defmodule ChatProject.Chat do
   alias ChatProject.Repo
 
   alias ChatProject.Chat.Message
+  alias ChatProject.Accounts.User
 
   @doc """
   Returns the list of messages.
@@ -49,9 +50,10 @@ defmodule ChatProject.Chat do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_message(attrs \\ %{}) do
+  def create_message(%User{} = user, attrs \\ %{}) do
     %Message{}
     |> Message.changeset(attrs)
+    |> Ecto.Changeset.put_change(:user_id, user.id)
     |> Repo.insert()
   end
 
