@@ -25,8 +25,21 @@ defmodule ChatProjectWeb.Router do
   end
 
   scope "/chat", ChatProjectWeb do
-    pipe_through :browser
+    pipe_through [:browser, :authenticate_user]
 
     resources "/messages", MessageController
+  end
+
+  defp authenticate_user(conn, _) do
+    case get_session(conn, :user_id) do
+      nil ->
+        conn
+        |> Phoenix.Controller.put_flash(:error, "Login Requried")
+        |> Phoenix.Controller.redirect(to: "/")
+        |> halt()
+
+      user_id ->
+        assign(conn, :current_user, ChatProject.Accounts.get_user!(user_id))
+    end
   end
 end
