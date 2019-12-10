@@ -23,4 +23,10 @@ defmodule ChatProjectWeb.Router do
     resources "/sessions", SessionController, only: [:new, :create, :delete],
       singleton: true
   end
+
+  scope "/chat", ChatProjectWeb do
+    pipe_through :browser
+
+    resources "/messages", MessageController
+  end
 end

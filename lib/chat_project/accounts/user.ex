@@ -3,11 +3,13 @@ defmodule ChatProject.Accounts.User do
   import Ecto.Changeset
 
   alias ChatProject.Accounts.Credential
+  alias ChatProject.Chat.Message
 
   schema "users" do
     field :name, :string
     field :username, :string
     has_one :credential, Credential
+    has_many :message, Message
 
     timestamps()
   end

@@ -14,7 +14,7 @@ defmodule ChatProjectWeb.SessionController do
         |> put_flash(:info, "Welcome!")
         |> put_session(:user_id, user.id)
         |> configure_session(renew: true)
-        |> redirect(to: "/")
+        |> redirect(to: Routes.message_path(conn, :create))
 
       {:error, :unauthorized} ->
         conn
