@@ -3,9 +3,18 @@
 <h3>Messages</h3>
 <div id="messages">
   <%= for message <- @messages do %>
-    <p><span style="font-size:12px;color: gray">[10/03/2019]</span> <i style="font-weight: bold"><%= message.message %></i></p>
+    <p class="chat-message--head">
+      <span class="chat-message--date">[10/03/2019]</span>
+      <span class="chat-message--name"><%= message.user.name %></span>
+
+    </p>
+    <p class="chat-message--body">
+      <%= message.message %>
+    </p>
   <% end %>
 </div>
+
+
 
 <label style="margin-top: 60px;">
   <input id="user-id-value" type="hidden" value="<%= @conn.assigns.current_user.id %>">

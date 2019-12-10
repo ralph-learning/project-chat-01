@@ -19,7 +19,9 @@ defmodule ChatProject.Chat do
 
   """
   def list_messages do
-    Repo.all(Message)
+    Message
+    |> Repo.all()
+    |> Repo.preload(:user)
   end
 
   @doc """

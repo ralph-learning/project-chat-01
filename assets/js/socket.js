@@ -12,6 +12,8 @@ const chatInput = document.getElementById('message-texteditor');
 const messagesContainer = document.getElementById("messages");
 const user_id = document.getElementById('user-id-value');
 
+messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
 chatInput.addEventListener("keypress", event => {
   if(event.keyCode === 13) {
     channel.push("new_msg", {body: chatInput.value, user_id: user_id.value});
@@ -20,21 +22,25 @@ chatInput.addEventListener("keypress", event => {
 });
 
 channel.on("new_msg", (payload) => {
-  console.log(payload)
+  // console.log(payload)
   const messageItem = document.createElement("p");
   const current_datetime = new Date();
 
   messageItem.setAttribute('style', 'margin-bottom: 0');
 
   const template = `
-    <p>
-      <span style="font-size:12px;color: gray">[10/03/2019]</span>
-      <i style="font-weight: bold">${payload.body}</i>
+    <p class="chat-message--head">
+      <span class="chat-message--date">[10/03/2019]</span>
+      <span class="chat-message--name">______</span>
+    </p>
+    <p class="chat-message--body">
+      ${payload.body}
     </p>
   `;
 
   messageItem.innerHTML = template;
   messagesContainer.appendChild(messageItem);
-})
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+});
 
 export default socket;
