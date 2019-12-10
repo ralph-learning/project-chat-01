@@ -2,7 +2,6 @@ defmodule ChatProjectWeb.RoomChannel do
   use Phoenix.Channel
 
   alias ChatProject.Chat
-  alias ChatProject.Chat.Message
   alias ChatProject.Repo
   alias ChatProject.Accounts.User
 
