@@ -13,7 +13,11 @@
         <nav role="navigation">
           <ul>
             <li>
-              <a href="<%= Routes.session_path(@conn, :new) %>">Login</a>
+              <%= if logged_in?(@conn) == false do %>
+                <a href="<%= Routes.session_path(@conn, :new) %>">Login</a>
+              <% else %>
+                <a href="<%= Routes.message_path(@conn, :index) %>">Join in the Chat</a>
+              <% end %>
             </li>
           </ul>
         </nav>
